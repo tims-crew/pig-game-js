@@ -33,6 +33,15 @@ function init() {
 
 init();
 
+function switchPlayer() {
+    currentScore = 0;
+    document.querySelector(`#current--${activePlayer}`).textContent = 0;
+
+    activePlayer = activePlayer === 0 ? 1 : 0;
+    playerOne.classList.toggle('player--active');
+    playerTwo.classList.toggle('player--active');
+}
+
 buttonRoll.addEventListener('click', function() {
     if (playing) {
         let dice = Math.trunc(Math.random() * (6-1) + 1)
@@ -48,3 +57,21 @@ buttonRoll.addEventListener('click', function() {
         }
     }
 })
+
+buttonHold.addEventListener("click", function() {
+    if (playing) {
+        score[activePlayer] += currentScore;
+        document.querySelector(`#score--${activePlayer}`).textContent = score[activePlayer];
+
+        if (score[activePlayer] >= 100) {
+            diceEl.classList.add('hidden');
+            document.querySelector(`.player--${activePlayer}`).classList.remove('player--active');
+            playing = false;
+            document.querySelector(`.player--${activePlayer}`).classList.add('player--winner');
+        } 
+
+        switchPlayer();
+    }
+})
+
+buttonNew.addEventListener('click', init)
