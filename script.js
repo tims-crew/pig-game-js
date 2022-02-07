@@ -32,3 +32,19 @@ function init() {
 }
 
 init();
+
+buttonRoll.addEventListener('click', function() {
+    if (playing) {
+        let dice = Math.trunc(Math.random() * (6-1) + 1)
+
+        diceEl.classList.remove('hidden');
+        diceEl.src = `img/dice-${dice}.png`;
+
+        if (dice !== 1) {
+            currentScore += dice;
+            document.querySelector(`#current--${activePlayer}`).textContent = currentScore;
+        } else {
+            switchPlayer();
+        }
+    }
+})
